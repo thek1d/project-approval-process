@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_1r0z4q7" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="4.4.0">
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="Definitions_1r0z4q7" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="4.4.0">
   <bpmn:collaboration id="Collaboration_0depumc">
     <bpmn:participant id="Participant_00bxv9i" name="Unternehemn" processRef="Process_0vnk1xu" />
     <bpmn:participant id="Participant_0r8iqb8" name="Kunde" processRef="Process_11e9x2v" />
@@ -9,7 +9,7 @@
     <bpmn:messageFlow id="Flow_18bnetc" name="Projektablehnung" sourceRef="Event_17vw2u4" targetRef="Participant_0r8iqb8" />
     <bpmn:messageFlow id="Flow_1wh6uwu" name="Projektannahme" sourceRef="Activity_0a7eo89" targetRef="Participant_0r8iqb8" />
   </bpmn:collaboration>
-  <bpmn:process id="Process_0vnk1xu" isExecutable="true">
+  <bpmn:process id="Approval-Process" isExecutable="true">
     <bpmn:laneSet id="LaneSet_112id0p">
       <bpmn:lane id="Lane_1msii1r" name="Vertrieb">
         <bpmn:flowNodeRef>StartEvent_1</bpmn:flowNodeRef>
@@ -29,9 +29,9 @@
         <bpmn:flowNodeRef>Event_1872d5n</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_0oq90fc</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Gateway_1rqknym</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Activity_0yfpa9r</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_1v6xmrt</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_0h12znt</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>Activity_0yfpa9r</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_0ndj8ce" name="Management">
         <bpmn:flowNodeRef>Event_032ptp5</bpmn:flowNodeRef>
@@ -46,6 +46,7 @@
     </bpmn:startEvent>
     <bpmn:task id="Activity_0y0lger" name="Kundenanfrage an zuständige Fachabteilung weiterleiten">
       <bpmn:incoming>Flow_1keo6e6</bpmn:incoming>
+      <bpmn:incoming>Flow_0ns5ihy</bpmn:incoming>
       <bpmn:outgoing>Flow_1srgawk</bpmn:outgoing>
     </bpmn:task>
     <bpmn:task id="Activity_1opu9fj" name="Projektanpassungen definieren">
@@ -63,11 +64,12 @@
     <bpmn:intermediateCatchEvent id="Event_0mlwijz">
       <bpmn:incoming>Flow_0afa8cm</bpmn:incoming>
       <bpmn:outgoing>Flow_0xit3l6</bpmn:outgoing>
-      <bpmn:messageEventDefinition id="MessageEventDefinition_11ara3q" />
+      <bpmn:messageEventDefinition id="MessageEventDefinition_11ara3q" messageRef="Message_0ajsli2" />
     </bpmn:intermediateCatchEvent>
     <bpmn:exclusiveGateway id="Gateway_0imbw7g">
       <bpmn:incoming>Flow_0xit3l6</bpmn:incoming>
       <bpmn:outgoing>Flow_07rwigc</bpmn:outgoing>
+      <bpmn:outgoing>Flow_0ns5ihy</bpmn:outgoing>
     </bpmn:exclusiveGateway>
     <bpmn:intermediateThrowEvent id="Event_060c7lo">
       <bpmn:incoming>Flow_0sowo4o</bpmn:incoming>
@@ -81,7 +83,7 @@
     </bpmn:task>
     <bpmn:endEvent id="Event_17vw2u4">
       <bpmn:incoming>Flow_0s87gcw</bpmn:incoming>
-      <bpmn:messageEventDefinition id="MessageEventDefinition_1d702x8" />
+      <bpmn:messageEventDefinition id="MessageEventDefinition_1d702x8" messageRef="Message_1t3lo4m" />
     </bpmn:endEvent>
     <bpmn:intermediateThrowEvent id="Event_1872d5n">
       <bpmn:incoming>Flow_1ugb7hw</bpmn:incoming>
@@ -112,9 +114,13 @@
       <bpmn:outgoing>Flow_0n28mby</bpmn:outgoing>
     </bpmn:intermediateThrowEvent>
     <bpmn:sequenceFlow id="Flow_0xs66ym" sourceRef="Activity_1v6xmrt" targetRef="Activity_0h12znt" />
-    <bpmn:sequenceFlow id="Flow_1ugb7hw" sourceRef="Gateway_1rqknym" targetRef="Event_1872d5n" />
+    <bpmn:sequenceFlow id="Flow_1ugb7hw" sourceRef="Gateway_1rqknym" targetRef="Event_1872d5n">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${true}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="Flow_13e9nob" sourceRef="Gateway_1rqknym" targetRef="Event_1kriet2" />
-    <bpmn:sequenceFlow id="Flow_0sowo4o" sourceRef="Gateway_1rqknym" targetRef="Event_060c7lo" />
+    <bpmn:sequenceFlow id="Flow_0sowo4o" sourceRef="Gateway_1rqknym" targetRef="Event_060c7lo">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${false}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="Flow_10lf92r" sourceRef="Event_1kriet2" targetRef="Activity_1opu9fj" />
     <bpmn:sequenceFlow id="Flow_0h990f2" sourceRef="Activity_1opu9fj" targetRef="Activity_0maprbt" />
     <bpmn:sequenceFlow id="Flow_0s87gcw" sourceRef="Activity_1jwxk8e" targetRef="Event_17vw2u4" />
@@ -122,15 +128,21 @@
     <bpmn:sequenceFlow id="Flow_0afa8cm" sourceRef="Activity_0maprbt" targetRef="Event_0mlwijz" />
     <bpmn:sequenceFlow id="Flow_0xit3l6" sourceRef="Event_0mlwijz" targetRef="Gateway_0imbw7g" />
     <bpmn:sequenceFlow id="Flow_0lk86fy" sourceRef="Event_060c7lo" targetRef="Activity_1jwxk8e" />
-    <bpmn:sequenceFlow id="Flow_07rwigc" name="Kunde hat abgelehnt" sourceRef="Gateway_0imbw7g" targetRef="Activity_1jwxk8e" />
+    <bpmn:sequenceFlow id="Flow_07rwigc" name="Kunde hat abgelehnt" sourceRef="Gateway_0imbw7g" targetRef="Activity_1jwxk8e">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${false}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="Flow_11oavf4" sourceRef="Event_1872d5n" targetRef="Activity_0yfpa9r" />
     <bpmn:sequenceFlow id="Flow_1fzl0cv" sourceRef="Activity_0yfpa9r" targetRef="Activity_0oq90fc" />
     <bpmn:sequenceFlow id="Flow_0n28mby" sourceRef="Event_0bf9t18" targetRef="Activity_0a7eo89" />
     <bpmn:sequenceFlow id="Flow_1wnfrkb" sourceRef="Activity_0a7eo89" targetRef="Event_0hzstpn" />
     <bpmn:sequenceFlow id="Flow_0ose1w0" sourceRef="Event_032ptp5" targetRef="Activity_1jwxk8e" />
     <bpmn:sequenceFlow id="Flow_0vjsp8o" sourceRef="Activity_0oq90fc" targetRef="Activity_1qkk43d" />
-    <bpmn:sequenceFlow id="Flow_0iddwh3" sourceRef="Gateway_1tja9ua" targetRef="Event_0bf9t18" />
-    <bpmn:sequenceFlow id="Flow_1irz2zo" sourceRef="Gateway_1tja9ua" targetRef="Event_032ptp5" />
+    <bpmn:sequenceFlow id="Flow_0iddwh3" sourceRef="Gateway_1tja9ua" targetRef="Event_0bf9t18">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${true}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_1irz2zo" sourceRef="Gateway_1tja9ua" targetRef="Event_032ptp5">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${false}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="Flow_0hapt3h" sourceRef="Activity_1qkk43d" targetRef="Gateway_1tja9ua" />
     <bpmn:sequenceFlow id="Flow_1srgawk" sourceRef="Activity_0y0lger" targetRef="Activity_1v6xmrt" />
     <bpmn:sequenceFlow id="Flow_0za8rxf" sourceRef="Activity_0h12znt" targetRef="Gateway_1rqknym" />
@@ -140,22 +152,25 @@
       <bpmn:outgoing>Flow_13e9nob</bpmn:outgoing>
       <bpmn:outgoing>Flow_0sowo4o</bpmn:outgoing>
     </bpmn:exclusiveGateway>
-    <bpmn:businessRuleTask id="Activity_1v6xmrt" name="Ressourcen- und Zeitaufwand abschätzen">
-      <bpmn:incoming>Flow_1srgawk</bpmn:incoming>
-      <bpmn:outgoing>Flow_0xs66ym</bpmn:outgoing>
-    </bpmn:businessRuleTask>
-    <bpmn:businessRuleTask id="Activity_0h12znt" name="Realisierungs-grad bestimmen">
-      <bpmn:incoming>Flow_0xs66ym</bpmn:incoming>
-      <bpmn:outgoing>Flow_0za8rxf</bpmn:outgoing>
-    </bpmn:businessRuleTask>
     <bpmn:task id="Activity_0yfpa9r" name="Pflichtenheft erstellen">
       <bpmn:incoming>Flow_11oavf4</bpmn:incoming>
       <bpmn:outgoing>Flow_1fzl0cv</bpmn:outgoing>
     </bpmn:task>
-    <bpmn:subProcess id="Activity_1qkk43d" name="Projektantrag prüfen">
+    <bpmn:task id="Activity_1v6xmrt" name="Ressourcen- und Zeitaufwand abschätzen">
+      <bpmn:incoming>Flow_1srgawk</bpmn:incoming>
+      <bpmn:outgoing>Flow_0xs66ym</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="Activity_0h12znt" name="Realisierungs-grad bestimmen">
+      <bpmn:incoming>Flow_0xs66ym</bpmn:incoming>
+      <bpmn:outgoing>Flow_0za8rxf</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="Activity_1qkk43d" name="Projektantrag prüfen">
       <bpmn:incoming>Flow_0vjsp8o</bpmn:incoming>
       <bpmn:outgoing>Flow_0hapt3h</bpmn:outgoing>
-    </bpmn:subProcess>
+    </bpmn:task>
+    <bpmn:sequenceFlow id="Flow_0ns5ihy" name="Kunde hat zugestimmt" sourceRef="Gateway_0imbw7g" targetRef="Activity_0y0lger">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${true}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
     <bpmn:textAnnotation id="TextAnnotation_0hmlblo">
       <bpmn:text>Kundenanfrage eingegangen</bpmn:text>
     </bpmn:textAnnotation>
@@ -191,6 +206,8 @@
   </bpmn:process>
   <bpmn:process id="Process_11e9x2v" isExecutable="false" />
   <bpmn:message id="Message_1ofxkdd" name="Message_1njk465" />
+  <bpmn:message id="Message_0ajsli2" name="Message_1ormshs" />
+  <bpmn:message id="Message_1t3lo4m" name="Message_33lp7jd" />
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_0depumc">
       <bpmndi:BPMNShape id="Participant_00bxv9i_di" bpmnElement="Participant_00bxv9i" isHorizontal="true">
@@ -308,6 +325,15 @@
         <di:waypoint x="430" y="490" />
         <di:waypoint x="470" y="490" />
       </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0ns5ihy_di" bpmnElement="Flow_0ns5ihy">
+        <di:waypoint x="1150" y="175" />
+        <di:waypoint x="1150" y="90" />
+        <di:waypoint x="380" y="90" />
+        <di:waypoint x="380" y="160" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="737" y="96" width="57" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="Event_0ros3c0_di" bpmnElement="StartEvent_1">
         <dc:Bounds x="242" y="182" width="36" height="36" />
       </bpmndi:BPMNShape>
@@ -371,16 +397,16 @@
       <bpmndi:BPMNShape id="Gateway_1rqknym_di" bpmnElement="Gateway_1rqknym" isMarkerVisible="true">
         <dc:Bounds x="815" y="465" width="50" height="50" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_0rkmne8_di" bpmnElement="Activity_1v6xmrt">
-        <dc:Bounds x="330" y="450" width="100" height="80" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_1p0pr3m_di" bpmnElement="Activity_0h12znt">
-        <dc:Bounds x="470" y="450" width="100" height="80" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0yfpa9r_di" bpmnElement="Activity_0yfpa9r">
         <dc:Bounds x="940" y="550" width="100" height="80" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_0cepueh_di" bpmnElement="Activity_1qkk43d">
+      <bpmndi:BPMNShape id="Activity_02xxst1_di" bpmnElement="Activity_1v6xmrt">
+        <dc:Bounds x="330" y="450" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0defw9g_di" bpmnElement="Activity_0h12znt">
+        <dc:Bounds x="470" y="450" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1avzonn_di" bpmnElement="Activity_1qkk43d">
         <dc:Bounds x="1110" y="660" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="TextAnnotation_0hmlblo_di" bpmnElement="TextAnnotation_0hmlblo">
