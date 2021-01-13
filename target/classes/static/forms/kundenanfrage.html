@@ -1,0 +1,57 @@
+<form role="form" name="customerForm"
+      class="form-horizontal">
+
+  <div class="form-group">
+    <label class="control-label col-md-4"
+           for="customer">Customer</label>
+    <div class="col-md-8">
+      <input cam-variable-name="customer"
+             cam-variable-type="String"
+             id="customer"
+             class="form-control"
+             type="text"
+             required />
+      <div class="help">
+        (e.g. &quot;Great Pizza for Everyone Inc.&quot;)
+      </div>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label class="control-label col-md-4"
+           for="amount">Amount of Features</label>
+    <div class="col-md-8">
+      <input cam-variable-name="features"
+             cam-variable-type="Double"
+             id="features"
+             name="features"
+             class="form-control"
+             type="text"
+             required />
+      <div class="help">
+        (e.g. &quot;30.00&quot;)
+      </div>
+
+      <p ng-show="customerForm.amount.$error.camVariableType">
+        Note: Input must be a 'Double'.
+      </p>
+
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label class="control-label col-md-4"
+           for="amount">Application Category</label>
+    <div class="col-md-8">
+      <select cam-variable-name="appCategory"
+              cam-variable-type="String"
+              class="form-control">
+        <option>App 1</option>
+        <option>App 2</option>
+        <option>App 3</option>
+      </select>
+    </div>
+  </div>
+
+</form>
+
