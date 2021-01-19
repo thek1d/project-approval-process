@@ -1,0 +1,81 @@
+<form class="form-horizontal"
+      role="form">
+
+  <p>How much resources and time do you expect?</p>
+
+  <div class="form-group">
+    <label class="control-label col-md-2">Customer</label>
+    <div class="col-md-10">
+      <input cam-variable-name="customer"
+             type="text"
+             name="customer"
+             readonly="true"
+             class="form-control" />
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="control-label col-md-2">Amount of features</label>
+    <div class="col-md-10">
+      <input cam-variable-name="features"
+             type="text"
+             name="features"
+             readonly="true"
+             class="form-control" />
+    </div>
+  </div>
+  
+  <div class="form-group">
+    <label class="control-label col-md-2">Application Category</label>
+    <div class="col-md-10">
+      <input cam-variable-name="appCategory"
+             type="text"
+             name="appCategory"
+             readonly="true"
+             class="form-control" />
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label class="control-label col-md-4"
+           for="amount">Amount of needed Ressources?</label>
+    <div class="col-md-8">
+      <input cam-variable-name="ressources"
+             cam-variable-type="Double"
+             id="ressources"
+             name="ressources"
+             class="form-control"
+             type="text"
+             required />
+      <div class="help">
+        (e.g. &quot;30.00&quot;)
+      </div>
+
+      <p ng-show="customerForm.amount.$error.camVariableType">
+        Note: Input must be a 'Double'.
+      </p>
+
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label class="control-label col-md-4"
+           for="amount">Amount of needed time?</label>
+    <div class="col-md-8">
+      <input cam-variable-name="time"
+             cam-variable-type="Double"
+             id="time"
+             name="time"
+             class="form-control"
+             type="text"
+             required />
+      <div class="help">
+        (e.g. &quot;30.00&quot;)
+      </div>
+
+      <p ng-show="customerForm.amount.$error.camVariableType">
+        Note: Input must be a 'Double'.
+      </p>
+
+    </div>
+  </div>
+</form>
