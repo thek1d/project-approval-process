@@ -19,8 +19,8 @@
         <bpmn:flowNodeRef>Event_0hzstpn</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_0y0lger</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_1jwxk8e</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>Activity_0maprbt</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_0a7eo89</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Activity_0maprbt</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_029wgd3" name="Fachabteilung">
         <bpmn:flowNodeRef>Event_1kriet2</bpmn:flowNodeRef>
@@ -29,9 +29,9 @@
         <bpmn:flowNodeRef>Gateway_1rqknym</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_1v6xmrt</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_0h12znt</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>Activity_1opu9fj</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_0yfpa9r</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_0oq90fc</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Activity_1opu9fj</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_0ndj8ce" name="Management">
         <bpmn:flowNodeRef>Event_032ptp5</bpmn:flowNodeRef>
@@ -113,10 +113,10 @@
     <bpmn:sequenceFlow id="Flow_0ose1w0" sourceRef="Event_032ptp5" targetRef="Activity_1jwxk8e" />
     <bpmn:sequenceFlow id="Flow_0vjsp8o" sourceRef="Activity_0oq90fc" targetRef="Activity_1qkk43d" />
     <bpmn:sequenceFlow id="Flow_0iddwh3" sourceRef="Gateway_1tja9ua" targetRef="Event_0bf9t18">
-      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${true}</bpmn:conditionExpression>
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${approved}</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="Flow_1irz2zo" sourceRef="Gateway_1tja9ua" targetRef="Event_032ptp5">
-      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${false}</bpmn:conditionExpression>
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${!approved}</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="Flow_0hapt3h" sourceRef="Activity_1qkk43d" targetRef="Gateway_1tja9ua" />
     <bpmn:sequenceFlow id="Flow_1srgawk" sourceRef="Activity_0y0lger" targetRef="Activity_1v6xmrt" />
@@ -138,18 +138,10 @@
       <bpmn:incoming>Flow_0xs66ym</bpmn:incoming>
       <bpmn:outgoing>Flow_0za8rxf</bpmn:outgoing>
     </bpmn:userTask>
-    <bpmn:manualTask id="Activity_1qkk43d" name="Projektantrag prüfen">
-      <bpmn:incoming>Flow_0vjsp8o</bpmn:incoming>
-      <bpmn:outgoing>Flow_0hapt3h</bpmn:outgoing>
-    </bpmn:manualTask>
     <bpmn:userTask id="Activity_0y0lger" name="Kundenanfrage an zuständige Fachabteilung weiterleiten">
       <bpmn:incoming>Flow_1keo6e6</bpmn:incoming>
       <bpmn:incoming>Flow_0ns5ihy</bpmn:incoming>
       <bpmn:outgoing>Flow_1srgawk</bpmn:outgoing>
-    </bpmn:userTask>
-    <bpmn:userTask id="Activity_1opu9fj" name="Projektanpassungen definieren">
-      <bpmn:incoming>Flow_10lf92r</bpmn:incoming>
-      <bpmn:outgoing>Flow_0h990f2</bpmn:outgoing>
     </bpmn:userTask>
     <bpmn:userTask id="Activity_1jwxk8e" name="Projekt ablehnen">
       <bpmn:incoming>Flow_0lk86fy</bpmn:incoming>
@@ -165,14 +157,31 @@
       <bpmn:incoming>Flow_1fzl0cv</bpmn:incoming>
       <bpmn:outgoing>Flow_0vjsp8o</bpmn:outgoing>
     </bpmn:userTask>
-    <bpmn:task id="Activity_0maprbt" name="Projekt-anpassungen kommunizieren">
-      <bpmn:incoming>Flow_0h990f2</bpmn:incoming>
-      <bpmn:outgoing>Flow_0afa8cm</bpmn:outgoing>
-    </bpmn:task>
     <bpmn:task id="Activity_0a7eo89" name="Projektannahme kommunizieren">
       <bpmn:incoming>Flow_0n28mby</bpmn:incoming>
       <bpmn:outgoing>Flow_1wnfrkb</bpmn:outgoing>
     </bpmn:task>
+    <bpmn:callActivity id="Activity_1qkk43d" name="Projektantrag prüfen" calledElement="ProjektantragPruefen">
+      <bpmn:extensionElements>
+        <camunda:in source="customer" target="customer" />
+        <camunda:in source="features" target="features" />
+        <camunda:in source="appCategory" target="appCategory" />
+        <camunda:in source="ressources" target="ressources" />
+        <camunda:in source="time" target="time" />
+        <camunda:in source="kind" target="kind" />
+        <camunda:out source="approved" target="approved" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0vjsp8o</bpmn:incoming>
+      <bpmn:outgoing>Flow_0hapt3h</bpmn:outgoing>
+    </bpmn:callActivity>
+    <bpmn:serviceTask id="Activity_1opu9fj" name="Projektanpassungen definieren" camunda:class="at.fhv.ProjectAdjust">
+      <bpmn:incoming>Flow_10lf92r</bpmn:incoming>
+      <bpmn:outgoing>Flow_0h990f2</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:userTask id="Activity_0maprbt" name="Projekt-anpassungen kommunizieren">
+      <bpmn:incoming>Flow_0h990f2</bpmn:incoming>
+      <bpmn:outgoing>Flow_0afa8cm</bpmn:outgoing>
+    </bpmn:userTask>
     <bpmn:textAnnotation id="TextAnnotation_0hmlblo">
       <bpmn:text>Kundenanfrage eingegangen</bpmn:text>
     </bpmn:textAnnotation>
@@ -223,9 +232,6 @@
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Lane_1msii1r_di" bpmnElement="Lane_1msii1r" isHorizontal="true">
         <dc:Bounds x="190" y="78" width="1680" height="242" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="TextAnnotation_1i7xmhi_di" bpmnElement="TextAnnotation_1i7xmhi">
-        <dc:Bounds x="720" y="400" width="100" height="54" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_0ns5ihy_di" bpmnElement="Flow_0ns5ihy">
         <di:waypoint x="1150" y="175" />
@@ -390,8 +396,20 @@
       <bpmndi:BPMNShape id="Activity_1nu3hm4_di" bpmnElement="Activity_0h12znt">
         <dc:Bounds x="470" y="450" width="100" height="80" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_0qjfu55_di" bpmnElement="Activity_1qkk43d">
-        <dc:Bounds x="1110" y="660" width="100" height="80" />
+      <bpmndi:BPMNShape id="Activity_144c647_di" bpmnElement="Activity_0y0lger">
+        <dc:Bounds x="330" y="160" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0f71244_di" bpmnElement="Activity_1jwxk8e">
+        <dc:Bounds x="1280" y="160" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_18zgi0x_di" bpmnElement="Activity_0yfpa9r">
+        <dc:Bounds x="940" y="550" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0vdijpm_di" bpmnElement="Activity_0oq90fc">
+        <dc:Bounds x="1110" y="550" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0bm03r1_di" bpmnElement="Activity_0a7eo89">
+        <dc:Bounds x="1590" y="160" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="TextAnnotation_0hmlblo_di" bpmnElement="TextAnnotation_0hmlblo">
         <dc:Bounds x="210" y="100" width="100" height="40" />
@@ -414,26 +432,17 @@
       <bpmndi:BPMNShape id="TextAnnotation_0ldbri1_di" bpmnElement="TextAnnotation_0ldbri1">
         <dc:Bounds x="770" y="570" width="100" height="40" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_144c647_di" bpmnElement="Activity_0y0lger">
-        <dc:Bounds x="330" y="160" width="100" height="80" />
+      <bpmndi:BPMNShape id="TextAnnotation_1i7xmhi_di" bpmnElement="TextAnnotation_1i7xmhi">
+        <dc:Bounds x="720" y="400" width="100" height="54" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_1e5c5d5_di" bpmnElement="Activity_1opu9fj">
+      <bpmndi:BPMNShape id="Activity_1f276eu_di" bpmnElement="Activity_1qkk43d">
+        <dc:Bounds x="1110" y="660" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_15hacyq_di" bpmnElement="Activity_1opu9fj">
         <dc:Bounds x="610" y="330" width="100" height="80" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_0f71244_di" bpmnElement="Activity_1jwxk8e">
-        <dc:Bounds x="1280" y="160" width="100" height="80" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_18zgi0x_di" bpmnElement="Activity_0yfpa9r">
-        <dc:Bounds x="940" y="550" width="100" height="80" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_0vdijpm_di" bpmnElement="Activity_0oq90fc">
-        <dc:Bounds x="1110" y="550" width="100" height="80" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_1f89y4y_di" bpmnElement="Activity_0maprbt">
+      <bpmndi:BPMNShape id="Activity_12pcufh_di" bpmnElement="Activity_0maprbt">
         <dc:Bounds x="550" y="160" width="100" height="80" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_0bm03r1_di" bpmnElement="Activity_0a7eo89">
-        <dc:Bounds x="1590" y="160" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Association_19xstjx_di" bpmnElement="Association_19xstjx">
         <di:waypoint x="260" y="182" />
