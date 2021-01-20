@@ -48,6 +48,13 @@
       <artifactId>spring-boot-starter-jdbc</artifactId>
     </dependency>
 
+    <dependency>
+      <groupId>org.camunda.bpm.extension.mockito</groupId>
+      <artifactId>camunda-bpm-mockito</artifactId>
+      <scope>test</scope>
+      <version>5.14.0</version>
+    </dependency>
+
   </dependencies>
 
   <build>

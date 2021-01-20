@@ -26,37 +26,34 @@ public class ProjectAdjust implements JavaDelegate {
   }
 
   public void adjustProject(Double ressources, Double workingTime, Double numFeatures, String appCategory, DelegateExecution execution){
+    double reduction = 0.0;
     if(appCategory.equals("App 1")){
       if(ressources > 15.0 && workingTime > 40.0){
-        numFeatures -= 3;
-        execution.setVariable("numFeatures", numFeatures);
+        reduction = 3.0;
       } else{
         throw new ProcessEngineException("Project is implementable!\n Wrong decision!");
       }
     } else if(appCategory.equals("App 2")){
       if(ressources > 10.0 && workingTime > 40.0){
-        numFeatures -= 5;
-        execution.setVariable("numFeatures", numFeatures);
+        reduction = 5.0;
       }
     } else if(appCategory.equals("App 3")){
       if(ressources > 20.0 && workingTime > 80.0){
-        numFeatures -= 2;
-        execution.setVariable("numFeatures", numFeatures);
+        reduction = 2.0;
       }
     } else if(ressources <= 10.0 && workingTime <= 40.0){
       throw new ProcessEngineException("Project is implementable!\n Wrong decision!");
     } else{
       throw new ProcessEngineException("Wrong App Category");
     }
+
+    if((numFeatures - reduction) < 0){
+      throw new ProcessEngineException("New amount of features is negative!");
+    } else{
+      numFeatures -= reduction;
+      execution.setVariable("numFeatures", numFeatures);
+    }
     
-    /*
-      if(shouldFail != null && shouldFail) {
-        throw new ProcessEngineException("Could not archive invoice...");
-      } else {
-        LOGGER.info("\n\n  ... Now archiving invoice "+ invoiceNumber
-            +", filename: "+invoice.getFilename()+" \n\n");
-      }
-    */
   }
 
 }
