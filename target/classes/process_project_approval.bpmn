@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" id="Definitions_1r0z4q7" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="4.4.0">
   <bpmn:collaboration id="Collaboration_0depumc">
-    <bpmn:participant id="Participant_00bxv9i" name="Unternehemn" processRef="Process_0vnk1xu" />
+    <bpmn:participant id="Participant_00bxv9i" name="Unternehemn" processRef="Project_Approval" />
     <bpmn:participant id="Participant_0r8iqb8" name="Kunde" processRef="Process_11e9x2v" />
     <bpmn:messageFlow id="Flow_1h2cgql" name="Kundenanfrage" sourceRef="Participant_0r8iqb8" targetRef="StartEvent_1" />
     <bpmn:messageFlow id="Flow_0ypesb4" name="Projekt-anpassungen" sourceRef="Activity_0maprbt" targetRef="Participant_0r8iqb8" />
@@ -9,7 +9,7 @@
     <bpmn:messageFlow id="Flow_1wh6uwu" name="Projektannahme" sourceRef="Activity_0a7eo89" targetRef="Participant_0r8iqb8" />
     <bpmn:messageFlow id="Flow_0d54xm5" name="Kunden-entscheidung" sourceRef="Participant_0r8iqb8" targetRef="Activity_0d6o4l0" />
   </bpmn:collaboration>
-  <bpmn:process id="Process_0vnk1xu" isExecutable="true">
+  <bpmn:process id="Project_Approval" isExecutable="true">
     <bpmn:laneSet id="LaneSet_112id0p">
       <bpmn:lane id="Lane_1msii1r" name="Vertrieb">
         <bpmn:flowNodeRef>StartEvent_1</bpmn:flowNodeRef>
@@ -42,7 +42,7 @@
     </bpmn:laneSet>
     <bpmn:startEvent id="StartEvent_1" camunda:formKey="embedded:app:forms/kundenanfrage.html">
       <bpmn:outgoing>Flow_1keo6e6</bpmn:outgoing>
-      <bpmn:messageEventDefinition id="MessageEventDefinition_1qh144v" messageRef="Message_1ofxkdd" />
+      <bpmn:messageEventDefinition id="MessageEventDefinition_1qh144v" messageRef="Message_15cyu9i" />
     </bpmn:startEvent>
     <bpmn:intermediateThrowEvent id="Event_1kriet2">
       <bpmn:incoming>Flow_13e9nob</bpmn:incoming>
@@ -214,6 +214,7 @@
   <bpmn:message id="Message_1ofxkdd" name="Message_1njk465" />
   <bpmn:message id="Message_0ajsli2" name="Message_1ormshs" />
   <bpmn:message id="Message_1t3lo4m" name="Message_33lp7jd" />
+  <bpmn:message id="Message_15cyu9i" name="Message_0e0kdga" />
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_0depumc">
       <bpmndi:BPMNShape id="Participant_00bxv9i_di" bpmnElement="Participant_00bxv9i" isHorizontal="true">
