@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/" xmlns:dmndi="https://www.omg.org/spec/DMN/20191111/DMNDI/" xmlns:dc="http://www.omg.org/spec/DMN/20180521/DC/" xmlns:di="http://www.omg.org/spec/DMN/20180521/DI/" id="Definitions_0r4aui7" name="DRD" namespace="http://camunda.org/schema/1.0/dmn" exporter="Camunda Modeler" exporterVersion="4.4.0">
+  <decision id="project_classification" name="Projektklassifikation">
+    <decisionTable id="DecisionTable_1y5e3xs" hitPolicy="FIRST">
+      <input id="Input_1">
+        <inputExpression id="InputExpression_1" typeRef="string">
+          <text>customer</text>
+        </inputExpression>
+      </input>
+      <input id="InputClause_0gex8qu">
+        <inputExpression id="LiteralExpression_1h0lv6f" typeRef="string">
+          <text>appCategory</text>
+        </inputExpression>
+      </input>
+      <output id="Output_1" name="projectClass" typeRef="string" />
+      <rule id="DecisionRule_0dl2sxp">
+        <inputEntry id="UnaryTests_1kswe7q">
+          <text>"Oracle"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0hfak94">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0ouv5a3">
+          <text>"high level"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1x5ny73">
+        <inputEntry id="UnaryTests_1id9tjc">
+          <text>"Apple"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0agrrif">
+          <text>"App 1", "App 2"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_06305og">
+          <text>"high level"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0sdoj27">
+        <inputEntry id="UnaryTests_0dzr1rs">
+          <text>"Apple"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_128bcck">
+          <text>"App 3"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0j8lq15">
+          <text>"middle level"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0prmyqi">
+        <inputEntry id="UnaryTests_0l7hogv">
+          <text>"Microsoft"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0zzj5jl">
+          <text>"App 1"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0xzb81d">
+          <text>"high level"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1epktjp">
+        <inputEntry id="UnaryTests_1u96xvn">
+          <text>"Audi"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1a3odu9">
+          <text>"App 2"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1plzltd">
+          <text>"middle level"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_04qm5od">
+        <inputEntry id="UnaryTests_01gu9fj">
+          <text>"Mercedes"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0qnmd70">
+          <text>"App 1"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_10bqjog">
+          <text>"middle level"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_173w7es">
+        <inputEntry id="UnaryTests_0qpfhkn">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0pswyc7">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0x18ty7">
+          <text>"low level"</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <decision id="assign-the-approver" name="Genehmiger zuweisen">
+    <informationRequirement id="InformationRequirement_0f9w3ds">
+      <requiredDecision href="#project_classification" />
+    </informationRequirement>
+    <decisionTable id="DecisionTable_08ttmuk" hitPolicy="COLLECT">
+      <input id="InputClause_0ue5nsh">
+        <inputExpression id="LiteralExpression_0yt7huc" typeRef="string">
+          <text>projectClass</text>
+        </inputExpression>
+      </input>
+      <output id="OutputClause_0dt9fvi" name="approver" typeRef="string" />
+      <rule id="DecisionRule_04acp2w">
+        <inputEntry id="UnaryTests_0xkmpxx">
+          <text>"high level"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0ye1i4w">
+          <text>"BeGu"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0paw4vz">
+        <inputEntry id="UnaryTests_05omev2">
+          <text>"middle level"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1l55m2f">
+          <text>"John"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1k7bkeo">
+        <inputEntry id="UnaryTests_19bwtxw">
+          <text>"low level"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_06usgr9">
+          <text>"Frauke"</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <dmndi:DMNDI>
+    <dmndi:DMNDiagram>
+      <dmndi:DMNShape dmnElementRef="project_classification">
+        <dc:Bounds height="80" width="180" x="160" y="80" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_0y33dov" dmnElementRef="InformationRequirement_0f9w3ds">
+        <di:waypoint x="340" y="120" />
+        <di:waypoint x="440" y="120" />
+        <di:waypoint x="460" y="120" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_16q4png" dmnElementRef="assign-the-approver">
+        <dc:Bounds height="80" width="180" x="460" y="80" />
+      </dmndi:DMNShape>
+    </dmndi:DMNDiagram>
+  </dmndi:DMNDI>
+</definitions>
