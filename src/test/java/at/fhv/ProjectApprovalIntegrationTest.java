@@ -44,10 +44,5 @@ public class ProjectApprovalIntegrationTest {
         assertThat(process).isStarted();
 
     }
-    /*
-    private FileValue createDefaultFileValue() {
-        FileValue fileValue = Variables.fileValue("tst.txt").file("somebytes".getBytes()).create();
-        return fileValue;
-    }
-    */
+    
 }
