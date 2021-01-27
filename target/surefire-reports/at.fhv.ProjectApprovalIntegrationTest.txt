@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: at.fhv.ProjectApprovalIntegrationTest
 -------------------------------------------------------------------------------
-Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 31.745 s - in at.fhv.ProjectApprovalIntegrationTest
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 65.113 s - in at.fhv.ProjectApprovalIntegrationTest
