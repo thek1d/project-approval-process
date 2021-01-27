@@ -20,7 +20,7 @@ public class ProjectAdjust implements JavaDelegate {
 
     double newFeatures = adjustProject(ressources, workingTime, numFeatures, appCategory);
 
-    if((newFeatures - numFeatures) == 0.0){
+    if(newFeatures - numFeatures == 0.0){
       throw new ProcessEngineException("No Update done!");
     }else{
       execution.setVariable("numFeatures", newFeatures);
