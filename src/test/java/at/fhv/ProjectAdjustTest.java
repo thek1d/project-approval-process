@@ -24,9 +24,9 @@ public class ProjectAdjustTest {
         this.features = 6.0;
         this.appCategory = "App 1";
         ProjectAdjust projectAdjust = new ProjectAdjust();
-        Assertions.assertEquals(projectAdjust.adjustProject(this.ressources, this.time, this.features, this.appCategory), 3.0);
-        Assertions.assertEquals(projectAdjust.adjustProject(this.ressources, this.time, this.features, "App 2"), 4.0);
-        Assertions.assertEquals(projectAdjust.adjustProject(25.0, 90.0, this.features, "App 3"), 1.0);
+        Assertions.assertEquals(3.0, projectAdjust.adjustProject(this.ressources, this.time, this.features, this.appCategory));
+        Assertions.assertEquals(4.0, projectAdjust.adjustProject(this.ressources, this.time, this.features, "App 2"));
+        Assertions.assertEquals(1.0, projectAdjust.adjustProject(25.0, 90.0, this.features, "App 3"));
     }
 
     @Test

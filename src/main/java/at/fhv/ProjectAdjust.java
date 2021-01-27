@@ -27,7 +27,7 @@ public class ProjectAdjust implements JavaDelegate {
     }
   }
 
-  public double adjustProject(Double ressources, Double workingTime, Double numFeatures, String appCategory){
+  protected double adjustProject(Double ressources, Double workingTime, Double numFeatures, String appCategory){
     double reduction = 0.0;
 
     //check input data
