@@ -1,19 +1,14 @@
 package at.fhv;
 
-import java.util.logging.Logger;
-
 import org.camunda.bpm.engine.ProcessEngineException;
 import org.camunda.bpm.engine.delegate.DelegateExecution;
 import org.camunda.bpm.engine.delegate.JavaDelegate;
-import org.camunda.bpm.engine.variable.value.FileValue;
 
 /**
  * <p>This is an empty service implementation illustrating how to use a plain
  * Java Class as a BPMN 2.0 Service Task delegate.</p>
  */
 public class ProjectAdjust implements JavaDelegate {
-
-  private final Logger LOGGER = Logger.getLogger(ProjectAdjust.class.getName());
 
   public void execute(DelegateExecution execution) throws Exception {
 
