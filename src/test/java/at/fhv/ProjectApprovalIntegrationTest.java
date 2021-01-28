@@ -57,9 +57,9 @@ public class ProjectApprovalIntegrationTest {
         assertThat(process).isStarted();
     }
 
-    //Run a process and make sure it includes subprocess
+    //Run a process and make sure it includes service task
     @Test
-    public void testSubProcessIntegration(){
+    public void testServiceTaskIntegration(){
         ProcessInstance process = this.runtimeService.startProcessInstanceByKey("Project_Approval", 
         withVariables("customer", "Foo", "features", 10.0, "appCategory", "App 1", "ressources", 25.0, "time", 45.0, "impl", "Partly")); 
         assertThat(process).isNotNull();
@@ -70,16 +70,9 @@ public class ProjectApprovalIntegrationTest {
         complete(task());
         assertThat(process).isWaitingAt("Activity_0h12znt").task().hasName("Realisierungs-grad bestimmen");
         complete(task());
-        assertThat(process).isWaitingAt("Activity_0maprbt").task().hasName("Projekt-anpassungen kommunizieren");
-        
-        /*
-        //tbd, test stops at subprocess but doesn´t start and complete it
-        assertThat(process).isWaitingAt("Activity_1qkk43d").task().hasName("Projektantrag prüfen");
-        complete(task());
 
-        //if process is at following activity, then subprocess got included successfully
-        assertThat(process).isWaitingAt("Activity_0a7eo89").task().hasName("Projektannahme kommunizieren");
-        */
+        //if process waits at that task, service task got started and finished successfully
+        assertThat(process).isWaitingAt("Activity_0maprbt").task().hasName("Projekt-anpassungen kommunizieren");
     }
     
 }
