@@ -10,7 +10,7 @@ on:
     branches: [ master ]
 
 jobs:
-  run_unit_tests:
+  run_tests:
     runs-on: ubuntu-latest
 
     steps:
@@ -37,7 +37,7 @@ jobs:
       run: mvn pmd:check --file pom.xml
   
   build_and_release:
-    needs: [run_static_code_analysis, run_unit_tests]
+    needs: [run_static_code_analysis, run_tests]
     runs-on: ubuntu-latest
     
     steps:
