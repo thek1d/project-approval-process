@@ -1,8 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: at.fhv.ProjectApprovalIntegrationTest
 -------------------------------------------------------------------------------
-Tests run: 2, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 55.866 s <<< FAILURE! - in at.fhv.ProjectApprovalIntegrationTest
-testSubProcessStart  Time elapsed: 0.863 s  <<< ERROR!
-org.camunda.bpm.dmn.feel.impl.FeelException: FEEL/SCALA-01008 Error while evaluating expression: failed to evaluate expression 'customer': no variable found for name 'customer'
-	at at.fhv.ProjectApprovalIntegrationTest.testSubProcessStart(ProjectApprovalIntegrationTest.java:54)
-
+Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 57.258 s - in at.fhv.ProjectApprovalIntegrationTest

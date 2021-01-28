@@ -52,25 +52,34 @@ public class ProjectApprovalIntegrationTest {
     @Test
     public void testSubProcessStart(){
         ProcessInstance process = this.runtimeService.startProcessInstanceByKey("ProjektantragPruefen", 
-        withVariables("customer", "Foo", "features", 10.0, "appCategory", "App 1")); //variables to be changed
+        withVariables("customer", "Foo", "features", 10.0, "appCategory", "App 1")); 
         assertThat(process).isNotNull();
         assertThat(process).isStarted();
     }
 
-    /*
-    //Run a process and make sure it ends
+    //Run a process and make sure it includes subprocess
     @Test
-    public void testProcessEnd(){
+    public void testSubProcessIntegration(){
         ProcessInstance process = this.runtimeService.startProcessInstanceByKey("Project_Approval", 
-        withVariables("customer", "Foo", "features", 10.0, "appCategory", "App 1"));
-        ProcessEngine processEngine = ProcessEngines.getDefaultProcessEngine();
+        withVariables("customer", "Foo", "features", 10.0, "appCategory", "App 1", "ressources", 25.0, "time", 45.0, "impl", "Partly")); 
         assertThat(process).isNotNull();
-        //TaskService taskService = rule.getTaskService();
-        Task userTask = processEngine.getTaskService().createTaskQuery().processInstanceId(process.getId()).singleResult();
-        assertThat(userTask).isNotNull();
-        //processEngine.getTaskService().complete("Activity_0y0lger");
-        assertThat(process).isEnded();
+        assertThat(process).isStarted();
+        assertThat(process).isWaitingAt("Activity_0y0lger").task().hasName("Kundenanfrage an zuständige Fachabteilung weiterleiten");
+        complete(task());
+        assertThat(process).isWaitingAt("Activity_1v6xmrt").task().hasName("Ressourcen- und Zeitaufwand abschätzen");
+        complete(task());
+        assertThat(process).isWaitingAt("Activity_0h12znt").task().hasName("Realisierungs-grad bestimmen");
+        complete(task());
+        assertThat(process).isWaitingAt("Activity_0maprbt").task().hasName("Projekt-anpassungen kommunizieren");
         
+        /*
+        //tbd, test stops at subprocess but doesn´t start and complete it
+        assertThat(process).isWaitingAt("Activity_1qkk43d").task().hasName("Projektantrag prüfen");
+        complete(task());
+
+        //if process is at following activity, then subprocess got included successfully
+        assertThat(process).isWaitingAt("Activity_0a7eo89").task().hasName("Projektannahme kommunizieren");
+        */
     }
-    */
+    
 }
