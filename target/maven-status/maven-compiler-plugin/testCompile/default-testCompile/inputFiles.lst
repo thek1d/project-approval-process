@@ -1,2 +1,6 @@
-/mnt/c/Users/Marcus/Desktop/Hauptordner/Studium/Masterstudium/1. Semester/SLQ/Sieber/project-approval-process/src/test/java/at/fhv/ProjectAdjustTest.java
-/mnt/c/Users/Marcus/Desktop/Hauptordner/Studium/Masterstudium/1. Semester/SLQ/Sieber/project-approval-process/src/test/java/at/fhv/ProjectApprovalIntegrationTest.java
+/home/thek1d/Privat/FHV/Kurse/1_Semester/SLQ/Sieber/project-approval-process/src/test/java/at/fhv/ProjectAdjustTest.java
+/home/thek1d/Privat/FHV/Kurse/1_Semester/SLQ/Sieber/project-approval-process/src/test/java/at/fhv/bdd/ReviewInvoiceProcessStepDefs.java
+/home/thek1d/Privat/FHV/Kurse/1_Semester/SLQ/Sieber/project-approval-process/src/test/java/at/fhv/bdd/CucumberTest.java
+/home/thek1d/Privat/FHV/Kurse/1_Semester/SLQ/Sieber/project-approval-process/src/test/java/at/fhv/ProjectApprovalIntegrationTest.java
+/home/thek1d/Privat/FHV/Kurse/1_Semester/SLQ/Sieber/project-approval-process/src/test/java/at/fhv/bdd/InvoiceProcessStepDefs.java
+/home/thek1d/Privat/FHV/Kurse/1_Semester/SLQ/Sieber/project-approval-process/src/test/java/at/fhv/bdd/TestConfiguration.java

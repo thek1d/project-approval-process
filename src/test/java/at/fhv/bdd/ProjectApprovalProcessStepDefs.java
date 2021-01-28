@@ -6,6 +6,7 @@ import org.junit.runner.RunWith;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.boot.test.context.SpringBootTest;
 import io.cucumber.java.en.When;
+import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.Before;
@@ -23,7 +24,7 @@ import org.camunda.bpm.engine.ProcessEngine;
         "spring.datasource.generate-unique-name=true",
       }
 )
-public class ReviewInvoiceProcessStepDefs {
+public class ProjectApprovalProcessStepDefs {
 
     @Autowired
     ProcessEngine processEngine;  
@@ -42,22 +43,26 @@ public class ReviewInvoiceProcessStepDefs {
         System.out.println("Stopping a ReviewInvoiceProcess scenario");
     }
 
-    @Given("Review invoice subprocess started")
-    public void review_invoice_subprocess_started(){
-        this.instance = this.runtimeService.startProcessInstanceByKey("ReviewInvoice");
+    @Given("Projektantrag_subprocess started with customer {string} and {string}")
+    public void Projektantrag_subprocess_started(String customer, String appCategory){
+        this.instance = this.runtimeService.startProcessInstanceByKey("ProjektantragPruefen", withVariables("customer", customer, "appCategory", appCategory));
         assertThat(this.instance).isNotNull();
         assertThat(this.instance).isStarted();
     }
 
-    @When("Review gets assigned to {string}")
-    public void review_gets_assigned(String username){
-        complete(task(this.instance), withVariables("reviewer", username));
+    @When("approver is set to {string}")
+    public void approver_gets_assigned(String approver){
+        assertThat(task(this.instance)).isAssignedTo(approver);
     }
 
-    @Then("Reviewer is set to {string}")
-    public void reviewer_is_set(String username){
-        assertThat(task(this.instance)).isAssignedTo(username);
-        complete(task(this.instance));
+    @And("project is a approved with {}")
+    public void project_is_approved(boolean approved){
+        complete(task(this.instance), withVariables("approved", approved));
+    }
+
+
+    @Then("subprocess has finished")
+    public void approver_is_set(){
         assertThat(this.instance).isEnded();
     }
 }

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="at.fhv.ProjectApprovalIntegrationTest" time="7.131" tests="3" errors="0" skipped="0" failures="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="at.fhv.bdd.CucumberTest" time="2.677" tests="1" errors="0" skipped="0" failures="0">
   <properties>
     <property name="awt.toolkit" value="sun.awt.X11.XToolkit"/>
     <property name="java.specification.version" value="11"/>
@@ -56,7 +56,5 @@
     <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
     <property name="java.class.version" value="55.0"/>
   </properties>
-  <testcase name="testProcessStart" classname="at.fhv.ProjectApprovalIntegrationTest" time="0.342"/>
-  <testcase name="testServiceTaskIntegration" classname="at.fhv.ProjectApprovalIntegrationTest" time="0.184"/>
-  <testcase name="testSubProcessStart" classname="at.fhv.ProjectApprovalIntegrationTest" time="0.18"/>
+  <testcase name="Set project and approve" classname="at.fhv.bdd.CucumberTest" time="2.627"/>
 </testsuite>
