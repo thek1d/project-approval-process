@@ -44,7 +44,7 @@ public class ProjectApprovalProcessStepDefs {
     }
 
     @Given("Projektantrag_subprocess started with customer {string} and {string}")
-    public void Projektantrag_subprocess_started(String customer, String appCategory){
+    public void projektantrag_subprocess_started(String customer, String appCategory){
         this.instance = this.runtimeService.startProcessInstanceByKey("ProjektantragPruefen", withVariables("customer", customer, "appCategory", appCategory));
         assertThat(this.instance).isNotNull();
         assertThat(this.instance).isStarted();
@@ -61,8 +61,55 @@ public class ProjectApprovalProcessStepDefs {
     }
 
 
-    @Then("subprocess has finished")
-    public void approver_is_set(){
+    @Then("Process has finished")
+    public void finish_process(){
         assertThat(this.instance).isEnded();
+    }
+
+
+    @Given("Project_Approval process is started with customer {string} and appCategory {string} and numFeatures {double}")
+    public void project_Approval_started(String customer, String appCategory, Double numFeatures){
+        this.instance = this.runtimeService.startProcessInstanceByKey("Project_Approval", withVariables("customer", customer, "appCategory", appCategory, "features", numFeatures));
+        assertThat(this.instance).isNotNull();
+        assertThat(this.instance).isStarted();
+    }
+
+    @When("Customer request is forwarded")
+    public void customer_request_forwarded(){
+        complete(task(this.instance));
+    }
+
+    @And("Ressources are estimated with {double} and time estimated with {double}")
+    public void estimate_ressources_and_time(Double ressources, Double time){
+        complete(task(this.instance), withVariables("ressources", ressources, "time", time));
+    }
+
+    @And("Implementation status is {string}")
+    public void set_implementation_status(String decision){
+        complete(task(this.instance), withVariables("impl", decision));
+    }
+
+    @And("Project is rejected")
+    public void reject_project(){
+        complete(task(this.instance));
+    }
+
+    @And("Specification is defined by {string}")
+    public void create_specification(String kind){
+        complete(task(this.instance), withVariables("kind", kind));
+    }
+
+    @And("Project application is created")
+    public void create_project_application(){
+        complete(task(this.instance));
+    }
+
+    @And("Project approval is {}")
+    public void dont_approve_project(boolean approved){
+        ProcessInstance subinstance = this.runtimeService.startProcessInstanceByKey("ProjektantragPruefen", withVariables("customer", "Oracle", "appCategory", "App 2"));
+        assertThat(subinstance).isNotNull();
+        assertThat(subinstance).isStarted();
+        complete(task(subinstance), withVariables("approved", approved));   
+        assertThat(subinstance).isEnded();
     }
 }
