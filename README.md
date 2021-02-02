@@ -19,7 +19,7 @@ For the development of BPMN and DMN diagrams the [Camunda Modeler](https://camun
  
 ### Run the application
  
-To run the application execute the following maven command:
+To run the application locally, execute the following maven command:
  
 ```
 mvn spring-boot:run
@@ -28,3 +28,11 @@ mvn spring-boot:run
 The application starts on http://localhost:8080
  
 The default user name and password is specified in the file src/main/resources/application.yaml
+
+### Access the application on Heroku server
+
+To acces the application on Heroku server use the URL:
+
+```
+project-approval-process.herokuapp.com
+```
