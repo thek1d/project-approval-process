@@ -3,8 +3,10 @@ package at.fhv.bdd;
 import static org.camunda.bpm.engine.test.assertions.bpmn.BpmnAwareTests.*;
 
 import org.junit.runner.RunWith;
+import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.boot.test.context.SpringBootTest;
+import io.cucumber.spring.CucumberContextConfiguration; 
 import io.cucumber.java.en.When;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
@@ -24,6 +26,8 @@ import org.camunda.bpm.engine.ProcessEngine;
         "spring.datasource.generate-unique-name=true",
       }
 )
+@CucumberContextConfiguration
+@ContextConfiguration(classes = TestConfiguration.class)
 public class ProjectApprovalProcessStepDefs {
 
     @Autowired
@@ -50,12 +54,12 @@ public class ProjectApprovalProcessStepDefs {
         assertThat(this.instance).isStarted();
     }
 
-    @When("approver is set to {string}")
+    @When("Approver is set to {string}")
     public void approver_gets_assigned(String approver){
         assertThat(task(this.instance)).isAssignedTo(approver);
     }
 
-    @And("project is a approved with {}")
+    @And("Project is approved with {}")
     public void project_is_approved(boolean approved){
         complete(task(this.instance), withVariables("approved", approved));
     }
@@ -111,5 +115,20 @@ public class ProjectApprovalProcessStepDefs {
         assertThat(subinstance).isStarted();
         complete(task(subinstance), withVariables("approved", approved));   
         assertThat(subinstance).isEnded();
+    }
+
+    @And("Project changes are communicated")
+    public void communicate_project_changes(){
+        complete(task(this.instance));
+    }
+
+    @And("Customer declined changes with {}")
+    public void get_customer_decision(Boolean custagreed){
+        complete(task(this.instance), withVariables("custagreed", custagreed));
+    }
+
+    @Then("Process must be forwarded again")
+    public void wait_for_forwarding(){
+        assertThat(this.instance).isWaitingAt("Activity_0y0lger").task().hasName("Kundenanfrage an zuständige Fachabteilung weiterleiten");
     }
 }

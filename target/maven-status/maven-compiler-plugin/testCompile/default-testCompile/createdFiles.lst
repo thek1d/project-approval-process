@@ -1,6 +1,5 @@
 at/fhv/ProjectAdjustTest.class
 at/fhv/bdd/CucumberTest.class
 at/fhv/bdd/TestConfiguration.class
-at/fhv/bdd/InvoiceProcessStepDefs.class
 at/fhv/bdd/ProjectApprovalProcessStepDefs.class
 at/fhv/ProjectApprovalIntegrationTest.class
