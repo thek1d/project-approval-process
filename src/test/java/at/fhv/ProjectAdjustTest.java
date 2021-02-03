@@ -19,6 +19,10 @@ public class ProjectAdjustTest {
 
     @Test
     public void testCorrectAdjustments(){
+        /*
+        Test the correctness of the adjustment making
+        All three different adjustments are tested sequentially with their specific needed input values 
+        */
         this.ressources = 20.0;
         this.time = 45.0;
         this.features = 6.0;
@@ -31,6 +35,9 @@ public class ProjectAdjustTest {
 
     @Test
     public void testNegativeNumFeatures(){
+        /*
+        Test for avoiding adjustments which result in negative numbers of features
+        */
         this.ressources = 20.0;
         this.time = 45.0;
         this.features = 2.0;
@@ -43,6 +50,9 @@ public class ProjectAdjustTest {
 
     @Test
     public void testWrongInitialValues(){
+        /*
+        Test szenario of wrong input parameters 
+        */
         this.ressources = -2.0;
         this.time = -2.0;
         this.features = 0.0;
@@ -55,6 +65,9 @@ public class ProjectAdjustTest {
 
     @Test
     public void testCompleteness(){
+        /*
+        Test that input parameters are complete and not null
+        */
         this.ressources = 10.0;
         this.time = 35.0;
         this.features = 10.0;
@@ -67,6 +80,10 @@ public class ProjectAdjustTest {
 
     @Test
     public void testImplClassification(){
+        /*
+        Test that a wrong classification of degree of realization is catched and interrupts process
+        Interruption is needed due to possible confusion of customer who would have to accept his own request, because no adjustments would have been made 
+        */
         this.ressources = 9.0;
         this.time = 35.0;
         this.features = 9.0;

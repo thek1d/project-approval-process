@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/" xmlns:dmndi="https://www.omg.org/spec/DMN/20191111/DMNDI/" xmlns:dc="http://www.omg.org/spec/DMN/20180521/DC/" xmlns:di="http://www.omg.org/spec/DMN/20180521/DI/" id="Definitions_0r4aui7" name="DRD" namespace="http://camunda.org/schema/1.0/dmn" exporter="Camunda Modeler" exporterVersion="4.4.0">
-  <decision id="project_classification" name="Projektklassifikation">
+  <decision id="project_classification" name="Project classification">
     <decisionTable id="DecisionTable_1y5e3xs" hitPolicy="FIRST">
       <input id="Input_1">
         <inputExpression id="InputExpression_1" typeRef="string">
@@ -92,7 +92,7 @@
       </rule>
     </decisionTable>
   </decision>
-  <decision id="assign-the-approver" name="Genehmiger zuweisen">
+  <decision id="assign-the-approver" name="Assign the approver">
     <informationRequirement id="InformationRequirement_0f9w3ds">
       <requiredDecision href="#project_classification" />
     </informationRequirement>

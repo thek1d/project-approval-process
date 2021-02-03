@@ -44,12 +44,12 @@ public class ProjectApprovalProcessStepDefs {
 
     @After
     public void tearDown() {
-        System.out.println("Stopping a ReviewInvoiceProcess scenario");
+        System.out.println("Stopping a ProjectApprovalProcess scenario");
     }
 
-    @Given("Projektantrag_subprocess started with customer {string} and {string}")
-    public void projektantrag_subprocess_started(String customer, String appCategory){
-        this.instance = this.runtimeService.startProcessInstanceByKey("ProjektantragPruefen", withVariables("customer", customer, "appCategory", appCategory));
+    @Given("Subprocess CheckProjectProposal started with customer {string} and {string}")
+    public void check_proposal_subprocess_started(String customer, String appCategory){
+        this.instance = this.runtimeService.startProcessInstanceByKey("Check_Project_Proposal", withVariables("customer", customer, "appCategory", appCategory));
         assertThat(this.instance).isNotNull();
         assertThat(this.instance).isStarted();
     }
@@ -69,7 +69,6 @@ public class ProjectApprovalProcessStepDefs {
     public void finish_process(){
         assertThat(this.instance).isEnded();
     }
-
 
     @Given("Project_Approval process is started with customer {string} and appCategory {string} and numFeatures {double}")
     public void project_Approval_started(String customer, String appCategory, Double numFeatures){
@@ -110,25 +109,28 @@ public class ProjectApprovalProcessStepDefs {
 
     @And("Project approval is {}")
     public void dont_approve_project(boolean approved){
-        ProcessInstance subinstance = this.runtimeService.startProcessInstanceByKey("ProjektantragPruefen", withVariables("customer", "Oracle", "appCategory", "App 2"));
+        ProcessInstance subinstance = this.runtimeService.startProcessInstanceByKey("Check_Project_Proposal", withVariables("customer", "Oracle", "appCategory", "App 2"));
         assertThat(subinstance).isNotNull();
         assertThat(subinstance).isStarted();
         complete(task(subinstance), withVariables("approved", approved));   
         assertThat(subinstance).isEnded();
     }
 
-    @And("Project changes are communicated")
-    public void communicate_project_changes(){
+    @And("Project adjustments are communicated")
+    public void communicate_project_adjustments(){
+        //check that adjustments are made
+        assertThat(this.instance).hasPassed("Define_Project_Adjustments");
+        //complete communication
         complete(task(this.instance));
     }
 
-    @And("Customer declined changes with {}")
+    @And("Customer decided about adjustments with {}")
     public void get_customer_decision(Boolean custagreed){
         complete(task(this.instance), withVariables("custagreed", custagreed));
     }
 
     @Then("Process must be forwarded again")
     public void wait_for_forwarding(){
-        assertThat(this.instance).isWaitingAt("Activity_0y0lger").task().hasName("Kundenanfrage an zuständige Fachabteilung weiterleiten");
+        assertThat(this.instance).isWaitingAt("Forward_Cust_Request").task().hasName("Forward customer request to specific department");
     }
 }

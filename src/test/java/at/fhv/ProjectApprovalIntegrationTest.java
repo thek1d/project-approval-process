@@ -51,7 +51,7 @@ public class ProjectApprovalIntegrationTest {
      */
     @Test
     public void testSubProcessStart(){
-        ProcessInstance process = this.runtimeService.startProcessInstanceByKey("ProjektantragPruefen", 
+        ProcessInstance process = this.runtimeService.startProcessInstanceByKey("Check_Project_Proposal", 
         withVariables("customer", "Foo", "features", 10.0, "appCategory", "App 1")); 
         assertThat(process).isNotNull();
         assertThat(process).isStarted();
@@ -61,18 +61,19 @@ public class ProjectApprovalIntegrationTest {
     @Test
     public void testServiceTaskIntegration(){
         ProcessInstance process = this.runtimeService.startProcessInstanceByKey("Project_Approval", 
-        withVariables("customer", "Foo", "features", 10.0, "appCategory", "App 1", "ressources", 25.0, "time", 45.0, "impl", "Partly")); 
+        withVariables("customer", "Foo", "features", 10.0, "appCategory", "App 1")); 
         assertThat(process).isNotNull();
         assertThat(process).isStarted();
-        assertThat(process).isWaitingAt("Activity_0y0lger").task().hasName("Kundenanfrage an zuständige Fachabteilung weiterleiten");
+        assertThat(process).isWaitingAt("Forward_Cust_Request").task().hasName("Forward customer request to specific department");
         complete(task());
-        assertThat(process).isWaitingAt("Activity_1v6xmrt").task().hasName("Ressourcen- und Zeitaufwand abschätzen");
-        complete(task());
-        assertThat(process).isWaitingAt("Activity_0h12znt").task().hasName("Realisierungs-grad bestimmen");
-        complete(task());
+        assertThat(process).isWaitingAt("Estimate_Ress_Time").task().hasName("Estimate needed ressources and time");
+        complete(task(), withVariables("ressources", 25.0, "time", 45.0));
+        assertThat(process).isWaitingAt("Define_Realization").task().hasName("Define degree of realization");
+        complete(task(), withVariables("impl", "Partly"));
 
         //if process waits at that task, service task got started and finished successfully
-        assertThat(process).isWaitingAt("Activity_0maprbt").task().hasName("Projekt-anpassungen kommunizieren");
+        assertThat(process).hasPassed("Define_Project_Adjustments");
+        assertThat(process).isWaitingAt("Communicate_Project_Adjustments").task().hasName("Communicate project adjustments");
     }
     
 }

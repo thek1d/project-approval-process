@@ -1,0 +1,72 @@
+<form class="form-horizontal"
+      role="form">
+
+  <p>Define the specification.</p>
+
+  <div class="form-group">
+    <label class="control-label col-md-2">Customer</label>
+    <div class="col-md-10">
+      <input cam-variable-name="customer"
+             type="text"
+             name="customer"
+             readonly="true"
+             class="form-control" />
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="control-label col-md-2">Amount of features</label>
+    <div class="col-md-10">
+      <input cam-variable-name="features"
+             type="text"
+             name="features"
+             readonly="true"
+             class="form-control" />
+    </div>
+  </div>
+  
+<div class="form-group">
+  <label class="control-label col-md-2">Application Category</label>
+  <div class="col-md-10">
+    <input cam-variable-name="appCategory"
+           type="text"
+           name="appCategory"
+           readonly="true"
+           class="form-control" />
+  </div>
+</div>
+
+<div class="form-group">
+  <label class="control-label col-md-2">Needed Ressources</label>
+  <div class="col-md-10">
+    <input cam-variable-name="ressources"
+           type="text"
+           name="ressources"
+           readonly="true"
+           class="form-control" />
+  </div>
+</div>
+
+<div class="form-group">
+  <label class="control-label col-md-2">Needed Time</label>
+  <div class="col-md-10">
+    <input cam-variable-name="time"
+           type="text"
+           name="time"
+           readonly="true"
+           class="form-control" />
+  </div>
+</div>
+
+<div class="form-group">
+  <label class="control-label col-md-4"
+         for="kind">Kind of implementation</label>
+  <div class="col-md-8">
+    <input cam-variable-name="kind"
+           cam-variable-type="String"
+           id="kind"
+           class="form-control"
+           type="text"
+           required />
+  </div>
+</div>
+</form>
