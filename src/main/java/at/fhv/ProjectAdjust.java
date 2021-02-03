@@ -23,7 +23,7 @@ public class ProjectAdjust implements JavaDelegate {
     if(newFeatures - numFeatures == 0.0){
       throw new ProcessEngineException("No Update done!");
     }else{
-      execution.setVariable("numFeatures", newFeatures);
+      execution.setVariable("features", newFeatures);
     }
   }
 
