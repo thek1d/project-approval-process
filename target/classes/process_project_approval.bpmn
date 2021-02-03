@@ -65,7 +65,7 @@
       <bpmn:incoming>Flow_1ugb7hw</bpmn:incoming>
       <bpmn:outgoing>Flow_11oavf4</bpmn:outgoing>
     </bpmn:intermediateThrowEvent>
-    <bpmn:endEvent id="Event_0hzstpn" name="Projekt genehmigt">
+    <bpmn:endEvent id="Event_0hzstpn" name="Project approved">
       <bpmn:incoming>Flow_1wnfrkb</bpmn:incoming>
     </bpmn:endEvent>
     <bpmn:intermediateThrowEvent id="Project_Proposal_Rejected" name="Project proposal is rejected">
@@ -365,7 +365,7 @@
       <bpmndi:BPMNShape id="Event_0hzstpn_di" bpmnElement="Event_0hzstpn">
         <dc:Bounds x="1742" y="182" width="36" height="36" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="1715" y="225" width="90" height="14" />
+          <dc:Bounds x="1719" y="225" width="84" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_032ptp5_di" bpmnElement="Project_Proposal_Rejected">

@@ -29,7 +29,7 @@ public class ProjectApprovalApplication {
     if(processEngine.getIdentityService().createUserQuery().list().isEmpty()) {
       processEngine.getRepositoryService()
           .createDeployment()
-          .addInputStream("process_project_approval.bpmn", classLoader.getResourceAsStream("process_project_approval.bpmn")) //diagram_1.bpmn
+          .addInputStream("process_project_approval.bpmn", classLoader.getResourceAsStream("process_project_approval.bpmn")) 
           .deploy();
     }
   }

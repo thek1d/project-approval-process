@@ -47,27 +47,15 @@ public class ProjectApprovalProcessStepDefs {
         System.out.println("Stopping a ProjectApprovalProcess scenario");
     }
 
+    /*
+    Given methods
+    */
+
     @Given("Subprocess CheckProjectProposal started with customer {string} and {string}")
     public void check_proposal_subprocess_started(String customer, String appCategory){
         this.instance = this.runtimeService.startProcessInstanceByKey("Check_Project_Proposal", withVariables("customer", customer, "appCategory", appCategory));
         assertThat(this.instance).isNotNull();
         assertThat(this.instance).isStarted();
-    }
-
-    @When("Approver is set to {string}")
-    public void approver_gets_assigned(String approver){
-        assertThat(task(this.instance)).isAssignedTo(approver);
-    }
-
-    @And("Project is approved with {}")
-    public void project_is_approved(boolean approved){
-        complete(task(this.instance), withVariables("approved", approved));
-    }
-
-
-    @Then("Process has finished")
-    public void finish_process(){
-        assertThat(this.instance).isEnded();
     }
 
     @Given("Project_Approval process is started with customer {string} and appCategory {string} and numFeatures {double}")
@@ -77,9 +65,27 @@ public class ProjectApprovalProcessStepDefs {
         assertThat(this.instance).isStarted();
     }
 
+    /*
+    When methods
+    */
+
+    @When("Approver is set to {string}")
+    public void approver_gets_assigned(String approver){
+        assertThat(task(this.instance)).isAssignedTo(approver);
+    }
+
     @When("Customer request is forwarded")
     public void customer_request_forwarded(){
         complete(task(this.instance));
+    }
+
+    /*
+    And methods
+    */
+
+    @And("Project is approved with {}")
+    public void project_is_approved(boolean approved){
+        complete(task(this.instance), withVariables("approved", approved));
     }
 
     @And("Ressources are estimated with {double} and time estimated with {double}")
@@ -97,25 +103,6 @@ public class ProjectApprovalProcessStepDefs {
         complete(task(this.instance));
     }
 
-    @And("Specification is defined by {string}")
-    public void create_specification(String kind){
-        complete(task(this.instance), withVariables("kind", kind));
-    }
-
-    @And("Project application is created")
-    public void create_project_application(){
-        complete(task(this.instance));
-    }
-
-    @And("Project approval is {}")
-    public void dont_approve_project(boolean approved){
-        ProcessInstance subinstance = this.runtimeService.startProcessInstanceByKey("Check_Project_Proposal", withVariables("customer", "Oracle", "appCategory", "App 2"));
-        assertThat(subinstance).isNotNull();
-        assertThat(subinstance).isStarted();
-        complete(task(subinstance), withVariables("approved", approved));   
-        assertThat(subinstance).isEnded();
-    }
-
     @And("Project adjustments are communicated")
     public void communicate_project_adjustments(){
         //check that adjustments are made
@@ -129,8 +116,18 @@ public class ProjectApprovalProcessStepDefs {
         complete(task(this.instance), withVariables("custagreed", custagreed));
     }
 
+    /*
+    Then methods
+    */
+
+    @Then("Process has finished")
+    public void finish_process(){
+        assertThat(this.instance).isEnded();
+    }
+
     @Then("Process must be forwarded again")
     public void wait_for_forwarding(){
         assertThat(this.instance).isWaitingAt("Forward_Cust_Request").task().hasName("Forward customer request to specific department");
     }
+
 }

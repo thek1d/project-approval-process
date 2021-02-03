@@ -20,7 +20,7 @@ public class ProjectAdjustTest {
     @Test
     public void testCorrectAdjustments(){
         /*
-        Test the correctness of the adjustment making
+        Test the correctness of the adjustments
         All three different adjustments are tested sequentially with their specific needed input values 
         */
         this.ressources = 20.0;
@@ -64,7 +64,7 @@ public class ProjectAdjustTest {
     }
 
     @Test
-    public void testCompleteness(){
+    public void testInputCompleteness(){
         /*
         Test that input parameters are complete and not null
         */
@@ -79,15 +79,31 @@ public class ProjectAdjustTest {
     }
 
     @Test
-    public void testImplClassification(){
+    public void testPositiveImplClassification(){
         /*
-        Test that a wrong classification of degree of realization is catched and interrupts process
+        Test that a wrong classification of degree of realization (project is implementable) is catched and interrupt process
         Interruption is needed due to possible confusion of customer who would have to accept his own request, because no adjustments would have been made 
         */
         this.ressources = 9.0;
         this.time = 35.0;
         this.features = 9.0;
         this.appCategory = "App 1";
+        Assertions.assertThrows(ProcessEngineException.class, () -> {
+            ProjectAdjust projectAdjust = new ProjectAdjust();
+            projectAdjust.adjustProject(this.ressources, this.time, this.features, this.appCategory);
+        });  
+    }
+
+    @Test
+    public void testNegativeImplClassification(){
+        /*
+        Test that a wrong classification of degree of realization (project is not implementable) is catched and interrupt process
+        Adjustments wouldn´t affect the nonability to realize this project due to lack of ressources and/or time
+        */
+        this.ressources = 60.0;
+        this.time = 200.0;
+        this.features = 20.0;
+        this.appCategory = "App 3";
         Assertions.assertThrows(ProcessEngineException.class, () -> {
             ProjectAdjust projectAdjust = new ProjectAdjust();
             projectAdjust.adjustProject(this.ressources, this.time, this.features, this.appCategory);
