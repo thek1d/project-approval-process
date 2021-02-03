@@ -36,7 +36,7 @@ public class ProjectAdjust implements JavaDelegate {
     }else if(ressources < 1.0 || workingTime < 1.0 || numFeatures < 1.0){
       throw new ProcessEngineException("Wrong initial values!");
     } else if(ressources > 50.0 || workingTime > 160.0){
-      throw new ProcessEngineException("Project is not implementable!\n Wrong decision!")
+      throw new ProcessEngineException("Project is not implementable!\n Wrong decision!");
     }
 
     /*
